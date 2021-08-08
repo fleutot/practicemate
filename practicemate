@@ -17,6 +17,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.chord_picker = ChordPicker()
         self.metronome = Metronome()
 
+        self.metronome.tick.connect(self.beat_string.setText)
         self.metronome.strong_tick.connect(self.chord_picker.update)
         self.chord_picker.new_chord.connect(self.chord_label.setText)
 
