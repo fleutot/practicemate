@@ -6,54 +6,44 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>847</width>
-    <height>648</height>
+    <width>513</width>
+    <height>188</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="verticalWidget" native="true">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>-1</x>
-      <y>-1</y>
-      <width>821</width>
-      <height>601</height>
+      <x>0</x>
+      <y>0</y>
+      <width>491</width>
+      <height>151</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <property name="spacing">
-      <number>6</number>
-     </property>
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
+    <layout class="QVBoxLayout" name="verticalLayout_4">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>36</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QLabel" name="chord_label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>72</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
@@ -61,7 +51,7 @@
         <enum>QLayout::SetFixedSize</enum>
        </property>
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="beat_string">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -80,7 +70,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_2">
+        <widget class="QSpinBox" name="beats_per_change">
          <property name="suffix">
           <string> beats per change</string>
          </property>
@@ -96,7 +86,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox">
+        <widget class="QSpinBox" name="tempo_bpm">
          <property name="suffix">
           <string> bpm</string>
          </property>
@@ -124,12 +114,11 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>847</width>
+     <width>513</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
