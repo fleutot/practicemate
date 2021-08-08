@@ -1,89 +1,35 @@
 #! /usr//bin/env python3
-from PyQt5.QtWidgets import QApplication, QLabel
-from PyQt5.QtCore import QObject, QTimer, pyqtSignal
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtCore import QObject, pyqtSignal
+
+from main_window import Ui_MainWindow
+from metronome import Metronome
+from chord_picker import ChordPicker
+
 import random
+import sys
 
-app = QApplication([])
+class Window(QMainWindow, Ui_MainWindow):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setupUi(self)
 
-class ChordPicker:
-    def __init__(self):
-        self.fundamental_probability = {
-            'A': 1/12,
-            'Bb': 1/12,
-            'B': 1/12,
-            'C': 1/12,
-            'C#': 1/12,
-            'D': 1/12,
-            'Eb': 1/12,
-            'E': 1/12,
-            'F': 1/12,
-            'F#': 1/12,
-            'G': 1/12,
-            'G#': 1/12 }
-        self.chord_type_probability = {
-            '7': 1.0,
-            'maj7': 0 }
+        self.chord_picker = ChordPicker()
+        self.metronome = Metronome()
 
-        self.label = QLabel('-')
-        self.label.show()
+        self.metronome.strong_tick.connect(self.chord_picker.update)
+        self.chord_picker.new_chord.connect(self.chord_label.setText)
 
-    def get(self):
-        fund = random.choices([*self.fundamental_probability.keys()],
-                              weights = [*self.fundamental_probability.values()])
-        chord_type = random.choices(
-            [*self.chord_type_probability.keys()],
-            weights = [*self.chord_type_probability.values()])
-        return fund[0] + chord_type[0]
-
-    def update(self):
-        new_chord = self.get()
-        while new_chord == self.label.text():
-            new_chord = self.get()
-        self.label.setText(new_chord)
-
-
-class Metronome(QObject):
-    tick = pyqtSignal()
-    strong_tick = pyqtSignal()
-
-    def __init__(self, callbacks=[], strong_callbacks=[], parent=None):
-        super(Metronome, self).__init__(parent)
-
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.tick_cb)
-
-        self.strong_period = 4
-        self.current_sub_tick = -1
-
-        for cb in callbacks:
-            self.tick.connect(cb)
-
-        for cb in strong_callbacks:
-            self.strong_tick.connect(cb)
-
-    def start(self):
-        self.timer.start(1000)
-
-    def tick_cb(self):
-        self.tick.emit()
-
-        self.current_sub_tick += 1
-        if self.current_sub_tick >= self.strong_period:
-            self.current_sub_tick = 0
-
-        if self.current_sub_tick == 0:
-            self.strong_tick.emit()
-
+        self.metronome.start()
 
 def main():
+    app = QApplication([])
     random.seed()
 
-    chord_picker = ChordPicker()
-    metronome = Metronome(strong_callbacks = [chord_picker.update])
+    win = Window()
+    win.show()
 
-    metronome.start()
-
-    app.exec_()
+    sys.exit(app.exec())
 
 if __name__ == "__main__":
     main()
