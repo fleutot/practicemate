@@ -15,13 +15,16 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         self.chord_picker = ChordPicker()
-        self.metronome = Metronome(strong_period=int(self.beats_per_change.value()))
+        self.metronome = Metronome(
+            bpm=self.tempo_bpm.value(),
+            strong_period=self.beats_per_change.value())
 
         self.metronome.tick.connect(self.beat_string.setText)
         self.metronome.strong_tick.connect(self.chord_picker.update)
         self.chord_picker.new_chord.connect(self.chord_label.setText)
 
         self.beats_per_change.valueChanged.connect(self.metronome.set_strong_period)
+        self.tempo_bpm.valueChanged.connect(self.metronome.set_tempo)
 
         self.metronome.start()
 
