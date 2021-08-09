@@ -4,13 +4,13 @@ class Metronome(QObject):
     tick = pyqtSignal(str)
     strong_tick = pyqtSignal()
 
-    def __init__(self, parent=None):
+    def __init__(self, strong_period, parent=None):
         super(Metronome, self).__init__(parent)
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.tick_cb)
 
-        self.strong_period = 4
+        self.strong_period = strong_period
         self.current_tick = 0
 
     def start(self):
@@ -26,3 +26,7 @@ class Metronome(QObject):
 
         if self.current_tick == 1:
             self.strong_tick.emit()
+
+    def set_strong_period(self, period):
+        self.strong_period = period
+        self.current_tick = 0
